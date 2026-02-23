@@ -339,96 +339,6 @@
     ctx.fillStyle = s; ctx.fill();
   }
 
-  /* ── Sparkle / rising star particles ── */
-  const SPARKLE_COLORS = [
-    [245, 224, 144], [255, 240, 180], [212, 175,  80],
-    [255, 255, 220], [200, 160,  60], [255, 210, 120],
-  ];
-
-  function randomSparkle() {
-    const [r,g,b] = SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)];
-    return {
-      x:     Math.random() * canvas.width,
-      y:     canvas.height + Math.random() * 40,
-      size:  1.2 + Math.random() * 2.6,
-      alpha: 0,
-      maxAlpha: 0.55 + Math.random() * 0.45,
-      phase: 'fadein',   // fadein → hold → fadeout
-      life:  0,
-      holdFrames: 18 + Math.floor(Math.random() * 30),
-      fadeSpeed: 0.025 + Math.random() * 0.025,
-      vy: -(0.5 + Math.random() * 1.0),
-      vx: (Math.random() - 0.5) * 0.4,
-      twinkle: Math.random() * Math.PI * 2,
-      twinkleSpeed: 0.08 + Math.random() * 0.12,
-      r, g, b,
-    };
-  }
-
-  let sparkles = [];
-  for (let i = 0; i < 35; i++) {
-    const s = randomSparkle();
-    s.y = Math.random() * canvas.height;   // scatter initial positions
-    s.alpha = Math.random() * s.maxAlpha;
-    s.phase = 'hold';
-    sparkles.push(s);
-  }
-
-  function drawStar(x, y, size, alpha, r, g, b) {
-    const tw = 0.5 + 0.5 * Math.sin(/* twinkle passed via closure */ 0);
-    ctx.save();
-    ctx.translate(x, y);
-    // four-point star
-    const pts = 4, outer = size, inner = size * 0.38;
-    ctx.beginPath();
-    for (let i = 0; i < pts * 2; i++) {
-      const angle = (i * Math.PI) / pts - Math.PI / 2;
-      const rad   = i % 2 === 0 ? outer : inner;
-      i === 0
-        ? ctx.moveTo(Math.cos(angle) * rad, Math.sin(angle) * rad)
-        : ctx.lineTo(Math.cos(angle) * rad, Math.sin(angle) * rad);
-    }
-    ctx.closePath();
-    ctx.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
-    ctx.fill();
-    // bright centre dot
-    ctx.beginPath();
-    ctx.arc(0, 0, size * 0.22, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255,255,240,${(alpha * 0.9).toFixed(3)})`;
-    ctx.fill();
-    ctx.restore();
-  }
-
-  function updateSparkle(s) {
-    s.twinkle += s.twinkleSpeed;
-    s.x += s.vx;
-    s.y += s.vy;
-
-    if (s.phase === 'fadein') {
-      s.alpha += s.fadeSpeed;
-      if (s.alpha >= s.maxAlpha) { s.alpha = s.maxAlpha; s.phase = 'hold'; s.life = 0; }
-    } else if (s.phase === 'hold') {
-      s.life++;
-      if (s.life >= s.holdFrames) s.phase = 'fadeout';
-    } else {
-      s.alpha -= s.fadeSpeed;
-      if (s.alpha <= 0 || s.y < -10) return randomSparkle(); // recycle
-    }
-    return s;
-  }
-
-  function tickSparkles() {
-    // spawn new ones randomly
-    if (sparkles.length < 50 && Math.random() < 0.25) sparkles.push(randomSparkle());
-    sparkles = sparkles.map(s => updateSparkle(s));
-
-    sparkles.forEach(s => {
-      const twinkleFactor = 0.7 + 0.3 * Math.sin(s.twinkle);
-      const a = s.alpha * twinkleFactor;
-      drawStar(s.x, s.y, s.size * twinkleFactor, a, s.r, s.g, s.b);
-    });
-  }
-
   /* ── Falling flower petals ── */
   const PETAL_COLORS = [
     { r:255, g:182, b:193 }, // soft pink
@@ -531,7 +441,6 @@
       drawOrb(o);
     });
     tickPetals();
-    tickSparkles();
     requestAnimationFrame(animate);
   }
   requestAnimationFrame(animate);
