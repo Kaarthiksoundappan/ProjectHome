@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Housewarming Invitation</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.js"></script>
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -158,6 +160,27 @@
     letter-spacing: 0.3px;
   }
   .details strong { font-weight: 400; color: #f5e090; }
+
+  .gif-btn {
+    display: block;
+    margin: 24px auto 0;
+    padding: 11px 32px;
+    background: linear-gradient(135deg, #c8943a, #f5e090, #c8943a);
+    background-size: 200% auto;
+    color: #3d2608;
+    border: none;
+    border-radius: 30px;
+    font-family: 'Lato', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(212,175,80,0.45);
+    transition: background-position 0.4s, opacity 0.2s;
+  }
+  .gif-btn:hover:not(:disabled) { background-position: right center; }
+  .gif-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 </style>
 </head>
 <body>
@@ -284,6 +307,8 @@
 
   </div>
 </div>
+
+<button class="gif-btn" id="gifBtn" onclick="generateGIF()">Download as GIF</button>
 
 <script>
   const canvas = document.getElementById('bokeh');
@@ -444,6 +469,68 @@
     requestAnimationFrame(animate);
   }
   requestAnimationFrame(animate);
+
+  /* ── GIF export ── */
+  async function generateGIF() {
+    const btn = document.getElementById('gifBtn');
+    btn.disabled = true;
+
+    // Fetch gif.js worker and turn into a blob URL (avoids same-origin restriction)
+    btn.textContent = 'Loading encoder…';
+    let workerUrl;
+    try {
+      const workerText = await fetch(
+        'https://cdnjs.cloudflare.com/ajax/libs/gif.js/0.2.0/gif.worker.js'
+      ).then(r => r.text());
+      workerUrl = URL.createObjectURL(new Blob([workerText], { type: 'application/javascript' }));
+    } catch (e) {
+      alert('Could not load GIF encoder. Check your internet connection.');
+      btn.disabled = false;
+      btn.textContent = 'Download as GIF';
+      return;
+    }
+
+    const FRAMES     = 40;   // number of frames
+    const FRAME_MS   = 80;   // ms per frame in the output GIF (~12fps)
+    const cardEl     = document.getElementById('card');
+
+    const gif = new GIF({
+      workers:      2,
+      quality:      6,        // 1=best, 10=fastest; 6 is a good balance
+      width:        cardEl.offsetWidth,
+      height:       cardEl.offsetHeight,
+      workerScript: workerUrl,
+      repeat:       0,        // 0 = loop forever
+    });
+
+    for (let i = 0; i < FRAMES; i++) {
+      btn.textContent = `Capturing… ${Math.round((i + 1) / FRAMES * 100)}%`;
+      const frameCanvas = await html2canvas(cardEl, {
+        useCORS:     true,
+        allowTaint:  false,
+        scale:       1,
+        logging:     false,
+      });
+      gif.addFrame(frameCanvas, { delay: FRAME_MS, copy: true });
+      // Wait one frame interval so animation actually advances before next capture
+      await new Promise(r => setTimeout(r, FRAME_MS));
+    }
+
+    gif.on('finished', blob => {
+      const url = URL.createObjectURL(blob);
+      const a   = document.createElement('a');
+      a.href     = url;
+      a.download = 'housewarming_invitation.gif';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+      URL.revokeObjectURL(workerUrl);
+      btn.disabled    = false;
+      btn.textContent = 'Download as GIF';
+    });
+
+    btn.textContent = 'Encoding GIF…';
+    gif.render();
+  }
 </script>
 </body>
 </html>
