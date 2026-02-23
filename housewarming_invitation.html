@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Housewarming Invitation</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #6b4c2a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    font-family: 'Lato', sans-serif;
+  }
+
+  .card {
+    width: 500px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.45);
+    text-align: center;
+    background: #3d2608;
+  }
+
+  #bokeh {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%,
+      rgba(45,25,8,0.45) 0%,
+      rgba(45,25,8,0.20) 60%,
+      rgba(45,25,8,0.05) 100%);
+    z-index: 1;
+  }
+
+  .frame {
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgba(212,175,80,0.40);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .frame::before {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid rgba(212,175,80,0.18);
+  }
+  .corner-tl, .corner-tr, .corner-bl, .corner-br {
+    position: absolute;
+    width: 18px; height: 18px;
+    border-color: rgba(212,175,80,0.7);
+    border-style: solid;
+    z-index: 3;
+  }
+  .corner-tl { top: 10px;  left: 10px;  border-width: 2px 0 0 2px; }
+  .corner-tr { top: 10px;  right: 10px; border-width: 2px 2px 0 0; }
+  .corner-bl { bottom: 10px; left: 10px;  border-width: 0 0 2px 2px; }
+  .corner-br { bottom: 10px; right: 10px; border-width: 0 2px 2px 0; }
+
+  .content {
+    position: relative;
+    z-index: 3;
+    padding: 48px 56px 48px;
+  }
+
+  /* Home illustration */
+  .home-wrap {
+    width: 160px;
+    margin: 0 auto 26px;
+    display: block;
+    filter: drop-shadow(0 4px 16px rgba(212,175,80,0.40));
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-6px); }
+  }
+
+  .poem {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13.2px;
+    color: #f0e0c0;
+    line-height: 2.1;
+    margin-bottom: 22px;
+    letter-spacing: 0.3px;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 300px;
+    margin: 0 auto 20px;
+  }
+  .dl { flex: 1; height: 1px; background: linear-gradient(to right, transparent, rgba(212,175,80,0.65), transparent); }
+  .diamond {
+    width: 6px; height: 6px;
+    background: #d4af50;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(212,175,80,0.9);
+  }
+
+  .happiness {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: #d8c090;
+    margin-bottom: 12px;
+    line-height: 1.7;
+  }
+
+  .host-name {
+    font-family: 'Great Vibes', cursive;
+    font-size: 50px;
+    color: #f5e090;
+    line-height: 1.15;
+    margin-bottom: 6px;
+    text-shadow: 0 0 18px rgba(245,224,144,0.45), 0 0 36px rgba(245,224,144,0.18);
+  }
+
+  .invite-body {
+    font-family: 'Playfair Display', serif;
+    font-size: 13.2px;
+    color: #e8d4a8;
+    line-height: 2.0;
+    margin-bottom: 18px;
+  }
+  .invite-body strong { color: #f5e090; font-weight: 600; letter-spacing: 0.4px; }
+
+  .blessing {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 12.8px;
+    color: #c8b080;
+    line-height: 2.0;
+    margin-bottom: 24px;
+  }
+
+  .details {
+    font-size: 13px;
+    font-weight: 300;
+    color: #ecdcb4;
+    line-height: 2.2;
+    letter-spacing: 0.3px;
+  }
+  .details strong { font-weight: 400; color: #f5e090; }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+
+  <canvas id="bokeh"></canvas>
+  <div class="overlay"></div>
+  <div class="frame"></div>
+  <div class="corner-tl"></div>
+  <div class="corner-tr"></div>
+  <div class="corner-bl"></div>
+  <div class="corner-br"></div>
+
+  <div class="content">
+
+    <!-- Little Home Illustration -->
+    <svg class="home-wrap" viewBox="0 0 200 130" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="roofG" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="#c8843a"/>
+          <stop offset="100%" stop-color="#8b5a20"/>
+        </linearGradient>
+        <linearGradient id="wallG" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="#f5e8c8"/>
+          <stop offset="100%" stop-color="#e0cc98"/>
+        </linearGradient>
+        <linearGradient id="doorG" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="#8b5a20"/>
+          <stop offset="100%" stop-color="#5c3610"/>
+        </linearGradient>
+        <filter id="homeglow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Ground glow -->
+      <ellipse cx="100" cy="122" rx="55" ry="8" fill="rgba(212,175,80,0.15)" filter="url(#homeglow)"/>
+
+      <!-- Wall -->
+      <rect x="62" y="68" width="76" height="52" rx="2" fill="url(#wallG)"/>
+
+      <!-- Roof -->
+      <polygon points="56,70 100,38 144,70" fill="url(#roofG)"/>
+      <line x1="100" y1="38" x2="100" y2="44" stroke="#e8a050" stroke-width="1.5" opacity="0.7"/>
+      <!-- Roof tile lines -->
+      <line x1="68"  y1="65" x2="82"  y2="50" stroke="#7a4e18" stroke-width="0.6" opacity="0.35"/>
+      <line x1="80"  y1="68" x2="91"  y2="52" stroke="#7a4e18" stroke-width="0.6" opacity="0.35"/>
+      <line x1="120" y1="68" x2="109" y2="52" stroke="#7a4e18" stroke-width="0.6" opacity="0.35"/>
+      <line x1="132" y1="65" x2="118" y2="50" stroke="#7a4e18" stroke-width="0.6" opacity="0.35"/>
+
+      <!-- Chimney -->
+      <rect x="118" y="45" width="9"  height="16" rx="1" fill="#a06830"/>
+      <rect x="116" y="43" width="13" height="4"  rx="1" fill="#c88040"/>
+      <!-- Smoke -->
+      <circle cx="122" cy="38" r="4"   fill="rgba(255,240,200,0.35)" filter="url(#homeglow)"/>
+      <circle cx="125" cy="32" r="3"   fill="rgba(255,240,200,0.25)" filter="url(#homeglow)"/>
+      <circle cx="121" cy="27" r="2.5" fill="rgba(255,240,200,0.18)" filter="url(#homeglow)"/>
+
+      <!-- Door -->
+      <rect x="88" y="88" width="24" height="32" rx="3" fill="url(#doorG)"/>
+      <rect x="90" y="90" width="9"  height="14" rx="1" fill="rgba(255,255,255,0.10)"/>
+      <rect x="101" y="90" width="9" height="14" rx="1" fill="rgba(255,255,255,0.10)"/>
+      <circle cx="100" cy="106" r="2" fill="#d4af50"/>
+
+      <!-- Windows -->
+      <rect x="68" y="76" width="16" height="14" rx="2" fill="#a8c8e8" opacity="0.8"/>
+      <line x1="76" y1="76" x2="76" y2="90" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+      <line x1="68" y1="83" x2="84" y2="83" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+      <rect x="116" y="76" width="16" height="14" rx="2" fill="#a8c8e8" opacity="0.8"/>
+      <line x1="124" y1="76" x2="124" y2="90" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+      <line x1="116" y1="83" x2="132" y2="83" stroke="rgba(255,255,255,0.5)" stroke-width="1"/>
+      <!-- Window warm glow -->
+      <rect x="68"  y="76" width="16" height="14" rx="2" fill="rgba(255,220,120,0.25)"/>
+      <rect x="116" y="76" width="16" height="14" rx="2" fill="rgba(255,220,120,0.25)"/>
+
+      <!-- Ground path -->
+      <ellipse cx="100" cy="120" rx="48" ry="5" fill="rgba(180,140,80,0.22)"/>
+      <rect x="92" y="118" width="16" height="4" rx="2" fill="rgba(180,140,80,0.28)"/>
+
+      <!-- Small flowers -->
+      <circle cx="64" cy="119" r="3"   fill="#f08080" opacity="0.8"/>
+      <circle cx="64" cy="119" r="1.5" fill="#ffe0e0" opacity="0.9"/>
+      <circle cx="70" cy="117" r="2.5" fill="#f0c040" opacity="0.8"/>
+      <circle cx="70" cy="117" r="1.2" fill="#fff8c0" opacity="0.9"/>
+      <circle cx="136" cy="119" r="3"   fill="#80c080" opacity="0.8"/>
+      <circle cx="130" cy="117" r="2.5" fill="#f08080" opacity="0.7"/>
+
+      <!-- Sparkles -->
+      <circle cx="58"  cy="72" r="1"   fill="#f5e090" opacity="0.7"/>
+      <circle cx="143" cy="68" r="0.8" fill="#f5e090" opacity="0.6"/>
+      <circle cx="100" cy="34" r="0.8" fill="#f5e090" opacity="0.5"/>
+    </svg>
+
+    <div class="poem">
+      A new home, a new journey,<br>
+      and countless beautiful memories<br>
+      waiting to bloom…
+    </div>
+
+    <div class="divider"><div class="dl"></div><div class="diamond"></div><div class="dl"></div></div>
+
+    <div class="happiness">With immense happiness,</div>
+    <div class="host-name">Soundappan &amp; Family</div>
+
+    <div class="invite-body">
+      invite you to share in the joy<br>
+      of our <strong>House Warming Celebration.</strong>
+    </div>
+
+    <div class="blessing">
+      Your blessings and presence<br>
+      will add warmth and light<br>
+      to our new abode.
+    </div>
+
+    <div class="divider"><div class="dl"></div><div class="diamond"></div><div class="dl"></div></div>
+
+    <div class="details">
+      <strong>Saturday, 8th March 2025 &nbsp;|&nbsp; 6:00 AM – 7:30 AM</strong><br>
+      56 A, Bharathi Street<br>
+      Dasappagounden Pudur – 638 503, Erode
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const canvas = document.getElementById('bokeh');
+  const card   = document.getElementById('card');
+  const ctx    = canvas.getContext('2d');
+
+  function resizeCanvas() {
+    canvas.width  = card.offsetWidth;
+    canvas.height = card.offsetHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', () => { resizeCanvas(); initBokeh(); });
+
+  const PALETTES = [
+    'rgba(210,160, 80,','rgba(190,130, 60,','rgba(230,190,110,',
+    'rgba(170,100, 40,','rgba(245,210,140,','rgba(200,150, 70,',
+    'rgba(240,200,120,','rgba(160, 90, 30,','rgba(255,230,160,',
+  ];
+
+  let orbs = [];
+  function randomOrb() {
+    const color = PALETTES[Math.floor(Math.random() * PALETTES.length)];
+    const r = 20 + Math.random() * 60;
+    return {
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r, color,
+      alpha: 0.06 + Math.random() * 0.20,
+      pulse: Math.random() * Math.PI * 2,
+      speed: 0.008 + Math.random() * 0.016,
+      drift: { x: (Math.random()-.5)*.22, y: (Math.random()-.5)*.16 }
+    };
+  }
+
+  function initBokeh() {
+    orbs = [];
+    for (let i = 0; i < 55; i++) orbs.push(randomOrb());
+  }
+  initBokeh();
+
+  function drawOrb(o) {
+    const a = o.alpha * (0.6 + 0.4 * Math.sin(o.pulse));
+    const g = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r);
+    g.addColorStop(0,    o.color + (a * 1.0).toFixed(3) + ')');
+    g.addColorStop(0.45, o.color + (a * 0.45).toFixed(3) + ')');
+    g.addColorStop(1,    o.color + '0)');
+    ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI*2);
+    ctx.fillStyle = g; ctx.fill();
+    const s = ctx.createRadialGradient(o.x, o.y, 0, o.x, o.y, o.r * 0.22);
+    s.addColorStop(0, 'rgba(255,245,220,' + (a * 0.55).toFixed(3) + ')');
+    s.addColorStop(1, 'rgba(255,245,220,0)');
+    ctx.beginPath(); ctx.arc(o.x, o.y, o.r * 0.22, 0, Math.PI*2);
+    ctx.fillStyle = s; ctx.fill();
+  }
+
+  /* ── Sparkle / rising star particles ── */
+  const SPARKLE_COLORS = [
+    [245, 224, 144], [255, 240, 180], [212, 175,  80],
+    [255, 255, 220], [200, 160,  60], [255, 210, 120],
+  ];
+
+  function randomSparkle() {
+    const [r,g,b] = SPARKLE_COLORS[Math.floor(Math.random() * SPARKLE_COLORS.length)];
+    return {
+      x:     Math.random() * canvas.width,
+      y:     canvas.height + Math.random() * 40,
+      size:  1.2 + Math.random() * 2.6,
+      alpha: 0,
+      maxAlpha: 0.55 + Math.random() * 0.45,
+      phase: 'fadein',   // fadein → hold → fadeout
+      life:  0,
+      holdFrames: 18 + Math.floor(Math.random() * 30),
+      fadeSpeed: 0.025 + Math.random() * 0.025,
+      vy: -(0.5 + Math.random() * 1.0),
+      vx: (Math.random() - 0.5) * 0.4,
+      twinkle: Math.random() * Math.PI * 2,
+      twinkleSpeed: 0.08 + Math.random() * 0.12,
+      r, g, b,
+    };
+  }
+
+  let sparkles = [];
+  for (let i = 0; i < 35; i++) {
+    const s = randomSparkle();
+    s.y = Math.random() * canvas.height;   // scatter initial positions
+    s.alpha = Math.random() * s.maxAlpha;
+    s.phase = 'hold';
+    sparkles.push(s);
+  }
+
+  function drawStar(x, y, size, alpha, r, g, b) {
+    const tw = 0.5 + 0.5 * Math.sin(/* twinkle passed via closure */ 0);
+    ctx.save();
+    ctx.translate(x, y);
+    // four-point star
+    const pts = 4, outer = size, inner = size * 0.38;
+    ctx.beginPath();
+    for (let i = 0; i < pts * 2; i++) {
+      const angle = (i * Math.PI) / pts - Math.PI / 2;
+      const rad   = i % 2 === 0 ? outer : inner;
+      i === 0
+        ? ctx.moveTo(Math.cos(angle) * rad, Math.sin(angle) * rad)
+        : ctx.lineTo(Math.cos(angle) * rad, Math.sin(angle) * rad);
+    }
+    ctx.closePath();
+    ctx.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
+    ctx.fill();
+    // bright centre dot
+    ctx.beginPath();
+    ctx.arc(0, 0, size * 0.22, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255,255,240,${(alpha * 0.9).toFixed(3)})`;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function updateSparkle(s) {
+    s.twinkle += s.twinkleSpeed;
+    s.x += s.vx;
+    s.y += s.vy;
+
+    if (s.phase === 'fadein') {
+      s.alpha += s.fadeSpeed;
+      if (s.alpha >= s.maxAlpha) { s.alpha = s.maxAlpha; s.phase = 'hold'; s.life = 0; }
+    } else if (s.phase === 'hold') {
+      s.life++;
+      if (s.life >= s.holdFrames) s.phase = 'fadeout';
+    } else {
+      s.alpha -= s.fadeSpeed;
+      if (s.alpha <= 0 || s.y < -10) return randomSparkle(); // recycle
+    }
+    return s;
+  }
+
+  function tickSparkles() {
+    // spawn new ones randomly
+    if (sparkles.length < 50 && Math.random() < 0.25) sparkles.push(randomSparkle());
+    sparkles = sparkles.map(s => updateSparkle(s));
+
+    sparkles.forEach(s => {
+      const twinkleFactor = 0.7 + 0.3 * Math.sin(s.twinkle);
+      const a = s.alpha * twinkleFactor;
+      drawStar(s.x, s.y, s.size * twinkleFactor, a, s.r, s.g, s.b);
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const bg = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    bg.addColorStop(0,   '#2e1a06');
+    bg.addColorStop(0.4, '#3d2510');
+    bg.addColorStop(0.7, '#4a2e14');
+    bg.addColorStop(1,   '#2a1804');
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    orbs.forEach(o => {
+      o.pulse += o.speed;
+      o.x += o.drift.x; o.y += o.drift.y;
+      if (o.x < -o.r)               o.x = canvas.width  + o.r;
+      if (o.x > canvas.width  + o.r) o.x = -o.r;
+      if (o.y < -o.r)               o.y = canvas.height + o.r;
+      if (o.y > canvas.height + o.r) o.y = -o.r;
+      drawOrb(o);
+    });
+    tickSparkles();
+    requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+</script>
+</body>
+</html>
