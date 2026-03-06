@@ -82,6 +82,25 @@
   .corner.bl { bottom: 1.2%; left: 1.5%; transform: scaleY(-1); }
   .corner.br { bottom: 1.2%; right: 1.5%; transform: scale(-1); }
 
+  /* ── Top decorative home illustration ── */
+  .top-deco {
+    position: absolute;
+    top: 7.5%;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4in;
+    opacity: 0.82;
+  }
+
+  .top-deco .diya-right {
+    display: inline-block;
+    transform: scaleX(-1);
+  }
+
   /* ── Main content ── */
   .content {
     position: relative;
@@ -274,6 +293,152 @@
     <div class="corner tr">❧</div>
     <div class="corner bl">❧</div>
     <div class="corner br">❧</div>
+
+    <!-- Top decorative home illustration -->
+    <div class="top-deco">
+
+      <!-- Left diya -->
+      <svg width="1.2in" height="2in" viewBox="0 0 65 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Flame glow -->
+        <ellipse cx="32" cy="20" rx="12" ry="18" fill="rgba(255,200,60,0.1)"/>
+        <!-- Outer flame -->
+        <path d="M32 30 Q22 20 27 6 Q32 0 37 6 Q42 20 32 30Z" fill="rgba(255,190,40,0.65)" stroke="rgba(200,140,20,0.4)" stroke-width="0.8"/>
+        <!-- Inner flame -->
+        <path d="M32 26 Q27 19 29 11 Q32 7 35 11 Q37 19 32 26Z" fill="rgba(255,240,180,0.9)"/>
+        <!-- Wick -->
+        <line x1="32" y1="31" x2="32" y2="42" stroke="#9a6e0a" stroke-width="1.5"/>
+        <!-- Oil bowl -->
+        <path d="M16 50 Q12 40 32 40 Q52 40 48 50 Q44 63 32 65 Q20 63 16 50Z" fill="rgba(201,146,15,0.22)" stroke="#c9920f" stroke-width="2"/>
+        <!-- Oil surface sheen -->
+        <ellipse cx="32" cy="41" rx="13" ry="3" fill="rgba(180,130,10,0.25)"/>
+        <!-- Handle/spout -->
+        <path d="M47 52 Q60 47 58 39 Q56 33 47 39" stroke="#c9920f" stroke-width="1.5" fill="none"/>
+        <!-- Stand taper -->
+        <path d="M24 65 L20 82 L44 82 L40 65Z" fill="rgba(201,146,15,0.18)" stroke="#c9920f" stroke-width="1.5"/>
+        <!-- Base plate -->
+        <ellipse cx="32" cy="82" rx="18" ry="4.5" fill="rgba(201,146,15,0.2)" stroke="#c9920f" stroke-width="1.5"/>
+        <!-- Decorative base ring -->
+        <ellipse cx="32" cy="86" rx="22" ry="5" fill="none" stroke="#c9920f" stroke-width="1" opacity="0.5"/>
+        <!-- Bowl dots -->
+        <circle cx="24" cy="54" r="1.5" fill="#c9920f" opacity="0.55"/>
+        <circle cx="32" cy="57" r="1.5" fill="#c9920f" opacity="0.55"/>
+        <circle cx="40" cy="54" r="1.5" fill="#c9920f" opacity="0.55"/>
+      </svg>
+
+      <!-- Central traditional home -->
+      <svg width="7.5in" height="5.2in" viewBox="0 0 600 415" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Subtle ground glow -->
+        <ellipse cx="300" cy="408" rx="240" ry="12" fill="rgba(201,146,15,0.07)"/>
+
+        <!-- ── Platform & steps ── -->
+        <rect x="50"  y="376" width="500" height="20" rx="4" fill="rgba(201,146,15,0.18)" stroke="#c9920f" stroke-width="1.5"/>
+        <rect x="80"  y="361" width="440" height="17" rx="3" fill="rgba(201,146,15,0.14)" stroke="#c9920f" stroke-width="1.5"/>
+        <rect x="110" y="348" width="380" height="15" rx="3" fill="rgba(201,146,15,0.12)" stroke="#c9920f" stroke-width="1.5"/>
+        <!-- Step dots (kolam) -->
+        <circle cx="220" cy="370" r="2.5" fill="#c9920f" opacity="0.45"/>
+        <circle cx="255" cy="370" r="2.5" fill="#c9920f" opacity="0.45"/>
+        <circle cx="290" cy="370" r="2.5" fill="#c9920f" opacity="0.45"/>
+        <circle cx="325" cy="370" r="2.5" fill="#c9920f" opacity="0.45"/>
+        <circle cx="360" cy="370" r="2.5" fill="#c9920f" opacity="0.45"/>
+        <circle cx="395" cy="370" r="2.5" fill="#c9920f" opacity="0.45"/>
+
+        <!-- ── Ground floor body ── -->
+        <rect x="60" y="230" width="480" height="125" fill="rgba(201,146,15,0.07)" stroke="#c9920f" stroke-width="2"/>
+
+        <!-- Outer pillars -->
+        <rect x="70"  y="228" width="16" height="127" rx="4" fill="rgba(201,146,15,0.22)" stroke="#c9920f" stroke-width="1.5"/>
+        <rect x="514" y="228" width="16" height="127" rx="4" fill="rgba(201,146,15,0.22)" stroke="#c9920f" stroke-width="1.5"/>
+        <!-- Inner pillars -->
+        <rect x="170" y="228" width="11" height="127" rx="3" fill="rgba(201,146,15,0.18)" stroke="#c9920f" stroke-width="1.5"/>
+        <rect x="419" y="228" width="11" height="127" rx="3" fill="rgba(201,146,15,0.18)" stroke="#c9920f" stroke-width="1.5"/>
+
+        <!-- Ground floor windows -->
+        <rect x="95"  y="255" width="65" height="55" rx="5" fill="rgba(201,146,15,0.1)" stroke="#c9920f" stroke-width="1.5"/>
+        <line x1="127" y1="255" x2="127" y2="310" stroke="#c9920f" stroke-width="1" opacity="0.45"/>
+        <line x1="95"  y1="282" x2="160" y2="282" stroke="#c9920f" stroke-width="1" opacity="0.45"/>
+        <!-- Arched top on left window -->
+        <path d="M95 265 Q127 250 160 265" stroke="#c9920f" stroke-width="1" fill="rgba(201,146,15,0.06)" opacity="0.6"/>
+
+        <rect x="440" y="255" width="65" height="55" rx="5" fill="rgba(201,146,15,0.1)" stroke="#c9920f" stroke-width="1.5"/>
+        <line x1="472" y1="255" x2="472" y2="310" stroke="#c9920f" stroke-width="1" opacity="0.45"/>
+        <line x1="440" y1="282" x2="505" y2="282" stroke="#c9920f" stroke-width="1" opacity="0.45"/>
+        <path d="M440 265 Q472 250 505 265" stroke="#c9920f" stroke-width="1" fill="rgba(201,146,15,0.06)" opacity="0.6"/>
+
+        <!-- Central arched door -->
+        <path d="M248 353 L248 278 Q300 248 352 278 L352 353 Z" fill="rgba(201,146,15,0.14)" stroke="#c9920f" stroke-width="2"/>
+        <path d="M263 353 L263 282 Q300 260 337 282 L337 353 Z" fill="rgba(201,146,15,0.08)" stroke="#c9920f" stroke-width="1.2"/>
+        <!-- Door knobs -->
+        <circle cx="286" cy="308" r="3.5" fill="#c9920f" opacity="0.65"/>
+        <circle cx="314" cy="308" r="3.5" fill="#c9920f" opacity="0.65"/>
+        <!-- Toran (garland) above door -->
+        <path d="M248 278 Q270 267 300 273 Q330 267 352 278" stroke="#c9920f" stroke-width="1.5" fill="none" opacity="0.7"/>
+        <circle cx="270" cy="269" r="2.5" fill="#c9920f" opacity="0.6"/>
+        <circle cx="300" cy="270" r="2.5" fill="#c9920f" opacity="0.6"/>
+        <circle cx="330" cy="269" r="2.5" fill="#c9920f" opacity="0.6"/>
+
+        <!-- ── Roof band ── -->
+        <rect x="70" y="218" width="460" height="16" rx="3" fill="rgba(201,146,15,0.2)" stroke="#c9920f" stroke-width="1.5"/>
+
+        <!-- ── Tiered roof (5 tiers, gopuram style) ── -->
+        <!-- Tier 1 (widest) -->
+        <polygon points="30,218 570,218 540,192 60,192" fill="rgba(201,146,15,0.14)" stroke="#c9920f" stroke-width="2"/>
+        <line x1="30" y1="218" x2="570" y2="218" stroke="#c9920f" stroke-width="0.8" opacity="0.35"/>
+        <!-- Tile lines tier 1 -->
+        <line x1="120" y1="192" x2="100" y2="218" stroke="#c9920f" stroke-width="0.7" opacity="0.25"/>
+        <line x1="200" y1="192" x2="178" y2="218" stroke="#c9920f" stroke-width="0.7" opacity="0.25"/>
+        <line x1="300" y1="192" x2="280" y2="218" stroke="#c9920f" stroke-width="0.7" opacity="0.25"/>
+        <line x1="400" y1="192" x2="378" y2="218" stroke="#c9920f" stroke-width="0.7" opacity="0.25"/>
+        <line x1="480" y1="192" x2="460" y2="218" stroke="#c9920f" stroke-width="0.7" opacity="0.25"/>
+
+        <!-- Tier 2 -->
+        <polygon points="70,192 530,192 500,166 100,166" fill="rgba(201,146,15,0.18)" stroke="#c9920f" stroke-width="2"/>
+        <!-- Tier 3 -->
+        <polygon points="110,166 490,166 462,143 138,143" fill="rgba(201,146,15,0.21)" stroke="#c9920f" stroke-width="1.8"/>
+        <!-- Tier 4 -->
+        <polygon points="155,143 445,143 420,122 180,122" fill="rgba(201,146,15,0.24)" stroke="#c9920f" stroke-width="1.8"/>
+        <!-- Tier 5 (small top) -->
+        <polygon points="200,122 400,122 378,104 222,104" fill="rgba(201,146,15,0.28)" stroke="#c9920f" stroke-width="1.5"/>
+
+        <!-- Roof edge ornament dots -->
+        <circle cx="240" cy="104" r="3" fill="#c9920f" opacity="0.5"/>
+        <circle cx="300" cy="102" r="3" fill="#c9920f" opacity="0.5"/>
+        <circle cx="360" cy="104" r="3" fill="#c9920f" opacity="0.5"/>
+
+        <!-- ── Kalash / finial ── -->
+        <!-- Neck post -->
+        <rect x="288" y="78" width="24" height="30" rx="3" fill="rgba(201,146,15,0.35)" stroke="#c9920f" stroke-width="1.5"/>
+        <!-- Pot belly -->
+        <ellipse cx="300" cy="76" rx="22" ry="14" fill="rgba(201,146,15,0.38)" stroke="#c9920f" stroke-width="2"/>
+        <!-- Pot neck -->
+        <ellipse cx="300" cy="65" rx="11" ry="6" fill="rgba(201,146,15,0.33)" stroke="#c9920f" stroke-width="1.5"/>
+        <!-- Leaves -->
+        <path d="M290 67 Q282 60 285 53" stroke="#c9920f" stroke-width="1.5" fill="none" opacity="0.65"/>
+        <path d="M310 67 Q318 60 315 53" stroke="#c9920f" stroke-width="1.5" fill="none" opacity="0.65"/>
+        <!-- Mango finial -->
+        <path d="M300 48 Q288 56 290 64 Q300 62 310 64 Q312 56 300 48Z" fill="#c9920f" opacity="0.6"/>
+        <circle cx="300" cy="46" r="4" fill="#c9920f" opacity="0.5"/>
+      </svg>
+
+      <!-- Right diya (mirrored) -->
+      <span class="diya-right">
+        <svg width="1.2in" height="2in" viewBox="0 0 65 105" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="32" cy="20" rx="12" ry="18" fill="rgba(255,200,60,0.1)"/>
+          <path d="M32 30 Q22 20 27 6 Q32 0 37 6 Q42 20 32 30Z" fill="rgba(255,190,40,0.65)" stroke="rgba(200,140,20,0.4)" stroke-width="0.8"/>
+          <path d="M32 26 Q27 19 29 11 Q32 7 35 11 Q37 19 32 26Z" fill="rgba(255,240,180,0.9)"/>
+          <line x1="32" y1="31" x2="32" y2="42" stroke="#9a6e0a" stroke-width="1.5"/>
+          <path d="M16 50 Q12 40 32 40 Q52 40 48 50 Q44 63 32 65 Q20 63 16 50Z" fill="rgba(201,146,15,0.22)" stroke="#c9920f" stroke-width="2"/>
+          <ellipse cx="32" cy="41" rx="13" ry="3" fill="rgba(180,130,10,0.25)"/>
+          <path d="M47 52 Q60 47 58 39 Q56 33 47 39" stroke="#c9920f" stroke-width="1.5" fill="none"/>
+          <path d="M24 65 L20 82 L44 82 L40 65Z" fill="rgba(201,146,15,0.18)" stroke="#c9920f" stroke-width="1.5"/>
+          <ellipse cx="32" cy="82" rx="18" ry="4.5" fill="rgba(201,146,15,0.2)" stroke="#c9920f" stroke-width="1.5"/>
+          <ellipse cx="32" cy="86" rx="22" ry="5" fill="none" stroke="#c9920f" stroke-width="1" opacity="0.5"/>
+          <circle cx="24" cy="54" r="1.5" fill="#c9920f" opacity="0.55"/>
+          <circle cx="32" cy="57" r="1.5" fill="#c9920f" opacity="0.55"/>
+          <circle cx="40" cy="54" r="1.5" fill="#c9920f" opacity="0.55"/>
+        </svg>
+      </span>
+
+    </div>
 
     <div class="content">
 
