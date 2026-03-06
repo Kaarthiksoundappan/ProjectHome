@@ -8,22 +8,22 @@
 <style>
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* Print size: 6ft wide × 3ft tall */
+  /* Print size: 3ft wide × 6ft tall */
   @page {
-    size: 72in 36in landscape;
+    size: 36in 72in portrait;
     margin: 0;
   }
 
   html, body {
-    width: 72in;
-    height: 36in;
+    width: 36in;
+    height: 72in;
     background: #0d0a07;
   }
 
-  /* ── Banner shell: fixed 6ft × 3ft for print ── */
+  /* ── Banner shell: fixed 3ft × 6ft for print ── */
   .banner-wrap {
-    width: 72in;
-    height: 36in;
+    width: 36in;
+    height: 72in;
     position: relative;
   }
 
@@ -71,7 +71,7 @@
   /* ── Corner florals ── */
   .corner {
     position: absolute;
-    font-size: 1.2in;
+    font-size: 0.65in;
     color: #c9920f;
     opacity: 0.75;
     z-index: 3;
@@ -96,7 +96,7 @@
 
   /* Small auspicious line at very top */
   .top-motif {
-    font-size: 1.1in;
+    font-size: 0.6in;
     color: #c9920f;
     letter-spacing: 0.5em;
     opacity: 0.8;
@@ -107,7 +107,7 @@
   .welcome {
     font-family: 'Cinzel', serif;
     font-weight: 400;
-    font-size: 4.5in;
+    font-size: 2.2in;
     color: #e8c46a;
     letter-spacing: 0.25em;
     line-height: 1;
@@ -131,8 +131,8 @@
     background: linear-gradient(to right, transparent, #b8820e 40%, #b8820e 60%, transparent);
   }
   .divider-diamond {
-    width: 0.35in;
-    height: 0.35in;
+    width: 0.18in;
+    height: 0.18in;
     background: #c9920f;
     transform: rotate(45deg);
     flex-shrink: 0;
@@ -143,7 +143,7 @@
     font-family: 'Cormorant Garamond', 'IM Fell English', Georgia, serif;
     font-weight: 300;
     font-style: italic;
-    font-size: 3.5in;
+    font-size: 1.75in;
     color: #f5f0e8;
     letter-spacing: 0.06em;
     line-height: 1.1;
@@ -163,18 +163,102 @@
     background: linear-gradient(to right, transparent, rgba(184,130,14,0.5) 40%, rgba(184,130,14,0.5) 60%, transparent);
   }
   .divider2 .divider-diamond {
-    width: 0.25in;
-    height: 0.25in;
+    width: 0.13in;
+    height: 0.13in;
   }
 
   /* Subtitle */
   .subtitle {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 400;
-    font-size: 0.9in;
+    font-size: 0.45in;
     color: #c9920f;
     letter-spacing: 0.35em;
     text-transform: uppercase;
+  }
+
+  /* ── Acknowledgement section ── */
+  .acknowledgement {
+    position: absolute;
+    bottom: 5.5%;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25in;
+  }
+
+  .ack-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.28in;
+    color: rgba(201,146,15,0.75);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  .ack-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    width: 40%;
+  }
+  .ack-divider .divider-line {
+    flex: 1;
+    height: 0.02in;
+    background: linear-gradient(to right, transparent, rgba(184,130,14,0.4) 40%, rgba(184,130,14,0.4) 60%, transparent);
+  }
+  .ack-divider .divider-diamond {
+    width: 0.1in;
+    height: 0.1in;
+    background: rgba(201,146,15,0.5);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  .ack-logos {
+    display: flex;
+    gap: 1.8in;
+    align-items: flex-start;
+  }
+
+  .ack-company {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.12in;
+  }
+
+  .ack-logo {
+    width: 1.1in;
+    height: 1.1in;
+    border: 0.025in solid rgba(184,130,14,0.4);
+    border-radius: 0.08in;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(184,130,14,0.05);
+  }
+
+  .ack-company-name {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 0.22in;
+    color: #d4b47a;
+    letter-spacing: 0.04em;
+    text-align: center;
+    max-width: 1.8in;
+    line-height: 1.3;
+  }
+
+  .ack-company-role {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 0.17in;
+    color: rgba(201,146,15,0.6);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-align: center;
   }
 </style>
 </head>
@@ -213,6 +297,58 @@
 
       <div class="subtitle">Griha Pravesh &nbsp;·&nbsp; 8th March 2026</div>
 
+    </div>
+
+    <!-- Acknowledgement: Construction & Catering -->
+    <div class="acknowledgement">
+      <div class="ack-title">✦ &nbsp; With Gratitude &nbsp; ✦</div>
+      <div class="ack-divider">
+        <div class="divider-line"></div>
+        <div class="divider-diamond"></div>
+        <div class="divider-line"></div>
+      </div>
+      <div class="ack-logos">
+
+        <!-- Construction Company -->
+        <div class="ack-company">
+          <div class="ack-logo">
+            <svg width="0.72in" height="0.72in" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Building silhouette -->
+              <polygon points="50,8 92,42 80,42 80,92 20,92 20,42 8,42" stroke="#c9920f" stroke-width="5" stroke-linejoin="round" fill="rgba(201,146,15,0.12)"/>
+              <!-- Door -->
+              <rect x="40" y="66" width="20" height="26" rx="2" fill="rgba(201,146,15,0.25)" stroke="#c9920f" stroke-width="3"/>
+              <!-- Windows -->
+              <rect x="26" y="54" width="14" height="12" rx="1" fill="rgba(201,146,15,0.2)" stroke="#c9920f" stroke-width="2.5"/>
+              <rect x="60" y="54" width="14" height="12" rx="1" fill="rgba(201,146,15,0.2)" stroke="#c9920f" stroke-width="2.5"/>
+              <!-- Ridge ornament -->
+              <circle cx="50" cy="8" r="4" fill="#c9920f" opacity="0.7"/>
+            </svg>
+          </div>
+          <div class="ack-company-name">Sri Building Constructions</div>
+          <div class="ack-company-role">Building Construction</div>
+        </div>
+
+        <!-- Catering Company -->
+        <div class="ack-company">
+          <div class="ack-logo">
+            <svg width="0.72in" height="0.72in" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Plate / cloche base -->
+              <ellipse cx="50" cy="72" rx="36" ry="8" stroke="#c9920f" stroke-width="4" fill="rgba(201,146,15,0.1)"/>
+              <!-- Dome -->
+              <path d="M14 72 Q14 32 50 32 Q86 32 86 72" stroke="#c9920f" stroke-width="4" fill="rgba(201,146,15,0.12)"/>
+              <!-- Handle knob -->
+              <circle cx="50" cy="28" r="6" fill="rgba(201,146,15,0.3)" stroke="#c9920f" stroke-width="3"/>
+              <!-- Steam lines -->
+              <path d="M36 20 Q34 14 36 8" stroke="#c9920f" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+              <path d="M50 18 Q48 12 50 6" stroke="#c9920f" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+              <path d="M64 20 Q62 14 64 8" stroke="#c9920f" stroke-width="2.5" stroke-linecap="round" opacity="0.6"/>
+            </svg>
+          </div>
+          <div class="ack-company-name">Annapoorna Catering Services</div>
+          <div class="ack-company-role">Food Arrangements</div>
+        </div>
+
+      </div>
     </div>
 
   </div>
